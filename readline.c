@@ -37,6 +37,29 @@ char* strn_cpy(char* dest, char* source, int length)
     return dest;
 }
 
+char* str_cat(char* temp, char* str)
+{
+    int lent_temp = my_strlen(temp);
+    int len_str = my_strlen(str);
+    int full_length = lent_temp + len_str + 1;
+
+    char* full_str = calloc(full_length, sizeof(char));
+
+    int index = 0;
+    for (index; index < lent_temp; index++)
+    {
+        full_str[index] = temp[index];
+    }
+
+    for (int i = 0; i < len_str; i++)
+    {
+        full_str[index] = str[i];
+        index++;   
+    }
+    
+    return full_str;
+}
+
 char *my_readline(int fd)
 {
     if (STORAGE_OF_FILE == NULL)
@@ -59,7 +82,10 @@ char *my_readline(int fd)
     char* ready_line = calloc(flag_n + 1, sizeof(char));
     strn_cpy(ready_line, STORAGE_OF_FILE, flag_n);
 
-    return ready_line;
+    char* next_lines = calloc(ready_line + 1, sizeof(char));
+    str_cat(next_lines, STORAGE_OF_FILE);
+   
+    return next_lines;
 }
 
 int main(int ac, char av)
