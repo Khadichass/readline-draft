@@ -37,27 +37,21 @@ char* strn_cpy(char* dest, char* source, int length)
     return dest;
 }
 
-char* str_cat(char* temp, char* str)
+char* str_cat(char* main_str, char* str)
 {
-    int lent_temp = my_strlen(temp);
+    // to continue printing next lines
+    int len_main = my_strlen(main_str);
     int len_str = my_strlen(str);
-    int full_length = lent_temp + len_str + 1;
 
-    char* full_str = calloc(full_length, sizeof(char));
+    int index = len_main;
 
-    int index = 0;
-    for (index; index < lent_temp; index++)
+    for (int i = 0; i < len_main ; i++)
     {
-        full_str[index] = temp[index];
-    }
-
-    for (int i = 0; i < len_str; i++)
-    {
-        full_str[index] = str[i];
-        index++;   
+        main_str[index] = str[i];
+        index++;
     }
     
-    return full_str;
+    return main_str;
 }
 
 char *my_readline(int fd)
