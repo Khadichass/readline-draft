@@ -7,7 +7,7 @@
 #define SUCCESS 1
 #define FAILURE -1
 
-int READLINE_READ_SIZE = 2;
+int READLINE_READ_SIZE = 1;
 char* STORAGE_OF_FILE;
 
 int my_strlen(char* str)
@@ -76,7 +76,7 @@ char *my_readline(int fd)
     char* ready_line = calloc(flag_n + 1, sizeof(char));
     strn_cpy(ready_line, STORAGE_OF_FILE, flag_n);
 
-    char* next_lines = calloc(ready_line + 1, sizeof(char));
+    char* next_lines = calloc(my_strlen(ready_line) + 1, sizeof(char));
     str_cat(next_lines, STORAGE_OF_FILE);
    
     return next_lines;
