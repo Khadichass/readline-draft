@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 int my_strlen(char* str)
 {
@@ -36,6 +38,19 @@ char* str_cpy(char* dest, char* source)
     }
     
     return dest;
+}
+
+int file_size(char* str)
+{
+    int fd = open(str, O_RDONLY);
+    char letter;
+    int counter = 0;
+    while (read(fd, &letter, 1))
+    {
+        counter++;
+    }
+
+    return counter;
 }
 
 char* my_realloc(char* str, int size)

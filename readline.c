@@ -7,7 +7,7 @@
 #define SUCCESS 1
 #define FAILURE -1
 
-int READLINE_READ_SIZE = 1;
+int READLINE_READ_SIZE = 1024;
 char* STORAGE_OF_FILE;
 
 int my_strlen(char* str)
@@ -74,23 +74,22 @@ char* str_cat(char* main_str, char* str)
 
 char* my_realloc(char* str, int size)
 {
-    char* new_str = malloc(size);
+    char* new_str = malloc(size + 1);
 
     if (size <= 0) {
         return NULL;
     }
 
-    if(new_str == NULL)
-    {
-        return NULL;
-    }
+    // if(new_str == NULL)
+    // {
+    //     return NULL;
+    // }
 
-    if (str != NULL)
-    {
-        str_cpy(new_str, str);
-        free(str);
-    }
-    return new_str;    
+    fill_with_nl(new_str, size + 1);
+    str_cpy(new_str, str);
+    free(str);
+
+    return new_str;
 }
 
 int file_size(char* str)
@@ -122,15 +121,19 @@ char *my_readline(int fd)
         return NULL;
 
     int index = 0;
-    if (my_strlen(STORAGE_OF_FILE) == 0)
+    int counter = 0;
+    if (my_strlen(STORAGE_OF_FILE) == 0 )
     {
         while (read(fd, &STORAGE_OF_FILE[index], READLINE_READ_SIZE))
         {
             index += READLINE_READ_SIZE;
             int allocate_size = READLINE_READ_SIZE + index + 1;
-            STORAGE_OF_FILE =(char*) realloc(STORAGE_OF_FILE, allocate_size);
+            // printf("%s", STORAGE_OF_FILE);
+            STORAGE_OF_FILE = my_realloc(STORAGE_OF_FILE, allocate_size);
             // fill_with_nl(STORAGE_OF_FILE, (READLINE_READ_SIZE + index + 1));
+            counter++;
         }
+    printf("-----%d-----", counter);
     }
     char* ret_value;
     int n_index = check_n(STORAGE_OF_FILE);
